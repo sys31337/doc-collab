@@ -27,7 +27,7 @@ const Navbar: React.FC<NavbarProps> = ({ user }) => {
       <div className="container mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:px-6">
         <Link href="#" className="flex items-center gap-2" prefetch={false}>
           <HiDocumentMagnifyingGlass className="h-6 w-6" />
-          <span className="sr-only">Doc-Collab</span>
+          <h1 className='font-semibold'>Doc-Collab</h1>
         </Link>
         <nav className="hidden items-center gap-6 text-sm font-medium md:flex">
           {NavLinks.map(({ id, href, label }) => {
