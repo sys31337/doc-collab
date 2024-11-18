@@ -1,3 +1,5 @@
+'use server';
+
 import { createClient } from '@lib/supabase';
 import { redirect } from 'next/navigation';
 import { headers } from 'next/headers';
