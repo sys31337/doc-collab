@@ -5,7 +5,7 @@ import type { FormatAction } from '../../types'
 import type { VariantProps } from 'class-variance-authority'
 import type { toggleVariants } from '@lib/components/ui/toggle'
 import { cn } from '@lib/utils'
-import { RxCaretDown, RxLetterCaseCapitalize } from 'react-icons/rx'
+import { CaretDownIcon, LetterCaseCapitalizeIcon } from '@radix-ui/react-icons'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@lib/components/ui/dropdown-menu'
 import { ToolbarButton } from '../toolbar-button'
 import { ShortcutKey } from '../shortcut-key'
@@ -120,8 +120,8 @@ export const SectionOne: React.FC<SectionOneProps> = React.memo(
             size={size}
             variant={variant}
           >
-            <RxLetterCaseCapitalize className="size-5" />
-            <RxCaretDown className="size-5" />
+            <LetterCaseCapitalizeIcon className="size-5" />
+            <CaretDownIcon className="size-5" />
           </ToolbarButton>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start" className="w-full">

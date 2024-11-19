@@ -1,5 +1,7 @@
 import Layout from "@components/Layout";
 import type { Metadata } from "next";
+import "@liveblocks/react-ui/styles.css";
+import "@liveblocks/react-tiptap/styles.css";
 import "./globals.css";
 import "@fontsource/poppins";
 

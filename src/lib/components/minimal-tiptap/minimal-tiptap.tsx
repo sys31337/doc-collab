@@ -6,6 +6,13 @@ import type { UseMinimalTiptapEditorProps } from './hooks/use-minimal-tiptap'
 import { EditorContent } from '@tiptap/react'
 import { Separator } from '@lib/components/ui/separator'
 import { cn } from '@lib/utils'
+import Highlight from "@tiptap/extension-highlight";
+import { Image } from "@tiptap/extension-image";
+import Link from "@tiptap/extension-link";
+import Placeholder from "@tiptap/extension-placeholder";
+import { TextAlign } from "@tiptap/extension-text-align";
+import { Typography } from "@tiptap/extension-typography";
+import Youtube from "@tiptap/extension-youtube";
 import { SectionOne } from './components/section/one'
 import { SectionTwo } from './components/section/two'
 import { SectionThree } from './components/section/three'
@@ -14,6 +21,8 @@ import { SectionFive } from './components/section/five'
 import { LinkBubbleMenu } from './components/bubble-menu/link-bubble-menu'
 import { useMinimalTiptapEditor } from './hooks/use-minimal-tiptap'
 import { MeasuredContainer } from './components/measured-container'
+import { useLiveblocksExtension } from '@liveblocks/react-tiptap'
+import StarterKit from '@tiptap/starter-kit'
 
 export interface MinimalTiptapProps extends Omit<UseMinimalTiptapEditorProps, 'onUpdate'> {
   value?: Content
@@ -52,10 +61,90 @@ const Toolbar = ({ editor }: { editor: Editor }) => (
 
 export const MinimalTiptapEditor = React.forwardRef<HTMLDivElement, MinimalTiptapProps>(
   ({ value, onChange, className, editorContentClassName, ...props }, ref) => {
+    const liveblocks = useLiveblocksExtension();
     const editor = useMinimalTiptapEditor({
       value,
       onUpdate: onChange,
-      ...props
+      ...props,
+      extensions: [
+        liveblocks,
+        StarterKit.configure({
+          blockquote: {
+            HTMLAttributes: {
+              class: "tiptap-blockquote",
+            },
+          },
+          code: {
+            HTMLAttributes: {
+              class: "tiptap-code",
+            },
+          },
+          codeBlock: {
+            languageClassPrefix: "language-",
+            HTMLAttributes: {
+              class: "tiptap-code-block",
+              spellcheck: false,
+            },
+          },
+          heading: {
+            levels: [1, 2, 3],
+            HTMLAttributes: {
+              class: "tiptap-heading",
+            },
+          },
+          // The Collaboration extension comes with its own history handling
+          history: false,
+          horizontalRule: {
+            HTMLAttributes: {
+              class: "tiptap-hr",
+            },
+          },
+          listItem: {
+            HTMLAttributes: {
+              class: "tiptap-list-item",
+            },
+          },
+          orderedList: {
+            HTMLAttributes: {
+              class: "tiptap-ordered-list",
+            },
+          },
+          paragraph: {
+            HTMLAttributes: {
+              class: "tiptap-paragraph",
+            },
+          },
+        }),
+        Highlight.configure({
+          HTMLAttributes: {
+            class: "tiptap-highlight",
+          },
+        }),
+        Image.configure({
+          HTMLAttributes: {
+            class: "tiptap-image",
+          },
+        }),
+        Link.configure({
+          HTMLAttributes: {
+            class: "tiptap-link",
+          },
+        }),
+        Placeholder.configure({
+          placeholder: "Start writing…",
+          emptyEditorClass: "tiptap-empty",
+        }),
+        TextAlign.configure({
+          types: ["heading", "paragraph"],
+        }),
+        Typography,
+        Youtube.configure({
+          modestBranding: true,
+          HTMLAttributes: {
+            class: "tiptap-youtube",
+          },
+        }),
+      ],
     })
 
     if (!editor) {

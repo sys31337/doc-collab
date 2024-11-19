@@ -3,7 +3,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@lib/components/ui/tool
 import { cn } from '@lib/utils'
 import { Button } from '@lib/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@lib/components/ui/dropdown-menu'
-import { RxClipboardCopy, RxDotsHorizontal, RxDownload, RxLink2, RxSize } from 'react-icons/rx'
+import { ClipboardCopyIcon, DotsHorizontalIcon, DownloadIcon, Link2Icon, SizeIcon } from '@radix-ui/react-icons'
 
 interface ImageActionsProps {
   shouldMerge?: boolean
@@ -69,10 +69,10 @@ const ActionItems: Array<{
   tooltip: string
   isLink?: boolean
 }> = [
-  { key: 'onView', icon: <RxSize className="size-4" />, tooltip: 'View image' },
-  { key: 'onDownload', icon: <RxDownload className="size-4" />, tooltip: 'Download image' },
-  { key: 'onCopy', icon: <RxClipboardCopy className="size-4" />, tooltip: 'Copy image to clipboard' },
-  { key: 'onCopyLink', icon: <RxLink2 className="size-4" />, tooltip: 'Copy image link', isLink: true }
+  { key: 'onView', icon: <SizeIcon className="size-4" />, tooltip: 'View image' },
+  { key: 'onDownload', icon: <DownloadIcon className="size-4" />, tooltip: 'Download image' },
+  { key: 'onCopy', icon: <ClipboardCopyIcon className="size-4" />, tooltip: 'Copy image to clipboard' },
+  { key: 'onCopyLink', icon: <Link2Icon className="size-4" />, tooltip: 'Copy image link', isLink: true }
 ]
 
 export const ImageActions: React.FC<ImageActionsProps> = React.memo(
@@ -93,7 +93,7 @@ export const ImageActions: React.FC<ImageActionsProps> = React.memo(
           <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
             <DropdownMenuTrigger asChild>
               <ActionButton
-                icon={<RxDotsHorizontal className="size-4" />}
+                icon={<DotsHorizontalIcon className="size-4" />}
                 tooltip="Open menu"
                 onClick={e => e.preventDefault()}
               />

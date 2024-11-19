@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Separator } from '@lib/components/ui/separator'
 import { ToolbarButton } from '../toolbar-button'
-import { RxCopy, RxExternalLink, RxLinkBreak2 } from 'react-icons/rx'
+import { CopyIcon, ExternalLinkIcon, LinkBreak2Icon } from '@radix-ui/react-icons'
 
 interface LinkPopoverBlockProps {
   url: string
@@ -38,11 +38,11 @@ export const LinkPopoverBlock: React.FC<LinkPopoverBlockProps> = ({ url, onClear
         </ToolbarButton>
         <Separator orientation="vertical" />
         <ToolbarButton tooltip="Open link in a new tab" onClick={handleOpenLink}>
-          <RxExternalLink className="size-4" />
+          <ExternalLinkIcon className="size-4" />
         </ToolbarButton>
         <Separator orientation="vertical" />
         <ToolbarButton tooltip="Clear link" onClick={onClear}>
-          <RxLinkBreak2 className="size-4" />
+          <LinkBreak2Icon className="size-4" />
         </ToolbarButton>
         <Separator orientation="vertical" />
         <ToolbarButton
@@ -54,7 +54,7 @@ export const LinkPopoverBlock: React.FC<LinkPopoverBlockProps> = ({ url, onClear
             }
           }}
         >
-          <RxCopy className="size-4" />
+          <CopyIcon className="size-4" />
         </ToolbarButton>
       </div>
     </div>

@@ -2,7 +2,7 @@ import * as React from 'react'
 import type { Editor } from '@tiptap/react'
 import type { toggleVariants } from '@lib/components/ui/toggle'
 import type { VariantProps } from 'class-variance-authority'
-import { RxCaretDown, RxCheck } from 'react-icons/rx'
+import { CaretDownIcon, CheckIcon } from '@radix-ui/react-icons'
 import { ToolbarButton } from '../toolbar-button'
 import { Popover, PopoverTrigger, PopoverContent } from '@lib/components/ui/popover'
 import { ToggleGroup, ToggleGroupItem } from '@lib/components/ui/toggle-group'
@@ -86,7 +86,7 @@ const MemoizedColorButton = React.memo<{
             onClick(color.cssVar)
           }}
         >
-          {isSelected && <RxCheck className="absolute inset-0 m-auto size-6" style={{ color: inverse }} />}
+          {isSelected && <CheckIcon className="absolute inset-0 m-auto size-6" style={{ color: inverse }} />}
         </ToggleGroupItem>
       </TooltipTrigger>
       <TooltipContent side="bottom">
@@ -167,7 +167,7 @@ export const SectionThree: React.FC<SectionThreeProps> = ({ editor, size, varian
             <path d="m6 16 6-12 6 12" />
             <path d="M8 12h8" />
           </svg>
-          <RxCaretDown className="size-5" />
+          <CaretDownIcon className="size-5" />
         </ToolbarButton>
       </PopoverTrigger>
       <PopoverContent align="start" className="w-full">

@@ -5,8 +5,9 @@ import useDocumentStore from '@lib/stores/documentStore';
 import { Button } from '@components/ui/button';
 import { Input } from '@components/ui/input';
 import { Content } from '@tiptap/react';
-import { MinimalTiptapEditor } from '@components/minimal-tiptap';
 import { TooltipProvider } from '@components/ui/tooltip';
+import { Room } from '../../Room';
+import { MinimalTiptapEditor } from '@components/minimal-tiptap';
 
 const DocumentCreation = () => {
   const [title, setTitle] = useState('');
@@ -46,18 +47,18 @@ const DocumentCreation = () => {
           className='bg-white'
           onChange={(e) => setTitle(e.target.value)}
         />
-        <MinimalTiptapEditor
-          value={content}
-          onChange={setContent}
-          className="w-full bg-white mt-5 border-0"
-          editorContentClassName="p-5"
-          immediatelyRender={false}
-          output="html"
-          placeholder="Type your description here..."
-          autofocus={true}
-          editable={true}
-          editorClassName="focus:outline-none"
-        />
+        <Room>
+          <MinimalTiptapEditor
+            value={content}
+            onChange={setContent}
+            className="w-full bg-white border-0 my-2"
+            editorContentClassName="px-5"
+            output="html"
+            placeholder="Type your description here..."
+            autofocus={true}
+            editable={true}
+            editorClassName="focus:outline-none" />
+        </Room>
         <Button onClick={createDocument} disabled={isSaving}>
           {isSaving ? 'Saving...' : 'Save'}
         </Button>

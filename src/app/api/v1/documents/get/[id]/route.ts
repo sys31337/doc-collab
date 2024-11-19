@@ -6,11 +6,12 @@ export async function GET(req: NextRequest, { params }: {
 }) {
   const { id } = await params
   const supabase = await createClient();
-  const { data: { user: user } } = await supabase.auth.getUser();
+  const { data: { user: user }, error: authError } = await supabase.auth.getUser();
+  if (authError || !user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   const { data: document, error } = await supabase
     .from('documents')
     .select('*')
-    .eq('user_id', user?.id)
+    // .eq('user_id', user?.id)
     .eq('id', id)
     .limit(1)
     .single();

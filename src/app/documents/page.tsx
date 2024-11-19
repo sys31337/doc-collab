@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@lib/components/ui/card"
-import { BellRing, Check, Delete, DeleteIcon, Edit2, Plus, Trash } from 'lucide-react';
+import { BellRing, Check, Edit2, Plus, Trash } from 'lucide-react';
 import { Button } from '@components/ui/button';
 import Link from 'next/link';
 
@@ -35,7 +35,7 @@ const Documents: React.FC = () => {
       {documents?.map(({ id, title }) => (
         <Card key={id} className="flex-1">
           <CardHeader>
-            <CardTitle>{title}</CardTitle>
+            <CardTitle>{title || 'Untitled'}</CardTitle>
             <CardDescription>You have 3 unread messages.</CardDescription>
           </CardHeader>
           <CardContent className="grid gap-4">
@@ -44,19 +44,15 @@ const Documents: React.FC = () => {
                 <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full inline-block border-2 border-background">
                   <img className="aspect-square h-full w-full" src="https://ui.shadcn.com/avatars/01.png" />
                 </span>
-                <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full inline-block border-2 border-background">
-                  <img className="aspect-square h-full w-full" src="https://ui.shadcn.com/avatars/05.png" />
-                </span>
-                <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full inline-block border-2 border-background">
-                  <img className="aspect-square h-full w-full" src="https://ui.shadcn.com/avatars/02.png" />
-                </span>
               </div>
             </div>
           </CardContent>
           <CardFooter className='gap-2'>
-            <Button className="w-full">
-              <Edit2 /> View
-            </Button>
+            <Link href={`documents/${id}`} className="w-full">
+              <Button className="w-full">
+                <Edit2 /> View
+              </Button>
+            </Link>
             <Button className="w-full bg-red-500 hover:bg-red-500/90 text-white">
               <Trash /> Delete
             </Button>

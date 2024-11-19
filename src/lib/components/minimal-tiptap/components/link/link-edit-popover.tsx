@@ -3,7 +3,7 @@ import type { Editor } from '@tiptap/react'
 import type { VariantProps } from 'class-variance-authority'
 import type { toggleVariants } from '@lib/components/ui/toggle'
 import { Popover, PopoverContent, PopoverTrigger } from '@lib/components/ui/popover'
-import { RxLink2 } from 'react-icons/rx'
+import { Link2Icon } from '@radix-ui/react-icons'
 import { ToolbarButton } from '../toolbar-button'
 import { LinkEditBlock } from './link-edit-block'
 
@@ -55,7 +55,7 @@ const LinkEditPopover = ({ editor, size, variant }: LinkEditPopoverProps) => {
           size={size}
           variant={variant}
         >
-          <RxLink2 className="size-5" />
+          <Link2Icon className="size-5" />
         </ToolbarButton>
       </PopoverTrigger>
       <PopoverContent className="w-full min-w-80" align="end" side="bottom">

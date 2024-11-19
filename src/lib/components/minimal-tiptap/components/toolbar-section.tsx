@@ -4,7 +4,7 @@ import type { FormatAction } from '../types'
 import type { VariantProps } from 'class-variance-authority'
 import type { toggleVariants } from '@lib/components/ui/toggle'
 import { cn } from '@lib/utils'
-import { RxCaretDown } from 'react-icons/rx'
+import { CaretDownIcon } from '@radix-ui/react-icons'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@lib/components/ui/dropdown-menu'
 import { ToolbarButton } from './toolbar-button'
 import { ShortcutKey } from './shortcut-key'
@@ -97,7 +97,7 @@ export const ToolbarSection: React.FC<ToolbarSectionProps> = ({
               size={size}
               variant={variant}
             >
-              {dropdownIcon || <RxCaretDown className="size-5" />}
+              {dropdownIcon || <CaretDownIcon className="size-5" />}
             </ToolbarButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="w-full">

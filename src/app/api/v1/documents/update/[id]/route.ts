@@ -1,17 +1,21 @@
 import { createClient } from '@lib/supabase';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET() {
+export async function POST(req: NextRequest, { params }: {
+  params: Promise<{ id: string }>
+}) {
+  const { id } = await params
+  const { title, content } = await req.json();
   const supabase = await createClient();
   const { data: { user: user }, error: authError } = await supabase.auth.getUser();
   if (authError || !user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  const { data: documents, error } = await supabase
+  const { error } = await supabase
     .from('documents')
-    .select('*')
-    .eq('user_id', user?.id);
+    .update({ title, content })
+    .eq('id', id)
 
   if (error) return NextResponse.json({ error: error.message }, { status: 400 });
 
-  return NextResponse.json({ documents }, { status: 200 });
+  return NextResponse.json({ document }, { status: 200 });
 
 }
