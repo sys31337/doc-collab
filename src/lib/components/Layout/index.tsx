@@ -21,6 +21,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       setUser(data.user);
     }
     loadUser();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return user
