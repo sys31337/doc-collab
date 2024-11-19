@@ -7,7 +7,9 @@ export async function GET(request: Request) {
 
   if (code) {
     const supabase = await createClient();
-    await supabase.auth.exchangeCodeForSession(code);
+    const { data } = await supabase.auth.exchangeCodeForSession(code);
+    const { id: uuid, email } = data.user || {};
+    await supabase.from('users').upsert({ uuid, email }, { onConflict: 'email' });
   }
 
   return NextResponse.redirect(requestUrl.origin);

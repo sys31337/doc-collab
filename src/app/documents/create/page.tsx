@@ -6,7 +6,7 @@ import { Button } from '@components/ui/button';
 import { Input } from '@components/ui/input';
 import { Content } from '@tiptap/react';
 import { TooltipProvider } from '@components/ui/tooltip';
-import { Room } from '../../Room';
+import Room from '../../Room';
 import { MinimalTiptapEditor } from '@components/minimal-tiptap';
 
 const DocumentCreation = () => {
@@ -47,12 +47,13 @@ const DocumentCreation = () => {
           className='bg-white'
           onChange={(e) => setTitle(e.target.value)}
         />
-        <Room>
+        <Room roomId='null'>
           <MinimalTiptapEditor
             value={content}
             onChange={setContent}
             className="w-full bg-white border-0 my-2"
-            editorContentClassName="px-5"
+            editorContentClassName="p-5"
+            immediatelyRender={false}
             output="html"
             placeholder="Type your description here..."
             autofocus={true}

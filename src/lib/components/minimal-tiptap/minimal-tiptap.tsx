@@ -23,6 +23,8 @@ import { useMinimalTiptapEditor } from './hooks/use-minimal-tiptap'
 import { MeasuredContainer } from './components/measured-container'
 import { useLiveblocksExtension } from '@liveblocks/react-tiptap'
 import StarterKit from '@tiptap/starter-kit'
+import { useMyPresence, useOthers } from '@liveblocks/react'
+import Cursor from '@components/Cursor'
 
 export interface MinimalTiptapProps extends Omit<UseMinimalTiptapEditorProps, 'onUpdate'> {
   value?: Content
@@ -59,8 +61,21 @@ const Toolbar = ({ editor }: { editor: Editor }) => (
   </div>
 )
 
+const COLORS = [
+  "#E57373",
+  "#9575CD",
+  "#4FC3F7",
+  "#81C784",
+  "#FFF176",
+  "#FF8A65",
+  "#F06292",
+  "#7986CB",
+];
+
 export const MinimalTiptapEditor = React.forwardRef<HTMLDivElement, MinimalTiptapProps>(
   ({ value, onChange, className, editorContentClassName, ...props }, ref) => {
+    const [, updateMyPresence] = useMyPresence();
+    const others = useOthers();
     const liveblocks = useLiveblocksExtension();
     const editor = useMinimalTiptapEditor({
       value,
@@ -153,6 +168,21 @@ export const MinimalTiptapEditor = React.forwardRef<HTMLDivElement, MinimalTipta
 
     return (
       <MeasuredContainer
+        onPointerMove={(event: { clientX: number, clientY: number }) => {
+          // Update the user cursor position on every pointer move
+          updateMyPresence({
+            cursor: {
+              x: Math.round(event.clientX),
+              y: Math.round(event.clientY),
+            },
+          });
+        }}
+        onPointerLeave={() =>
+          // When the pointer goes out, set cursor to null
+          updateMyPresence({
+            cursor: null,
+          })
+        }
         as="div"
         name="editor"
         ref={ref}
@@ -161,6 +191,25 @@ export const MinimalTiptapEditor = React.forwardRef<HTMLDivElement, MinimalTipta
           className
         )}
       >
+        {
+          /**
+           * Iterate over other users and display a cursor based on their presence
+           */
+          others.map(({ connectionId, presence }) => {
+            if (presence.cursor === null) {
+              return null;
+            }
+
+            return (
+              <Cursor
+                key={`cursor-${connectionId}`}
+                color={COLORS[connectionId % COLORS.length]}
+                x={(presence.cursor as {x: number})?.x || 0}
+                y={(presence.cursor as {y: number})?.y || 0}
+              />
+            );
+          })
+        }
         <Toolbar editor={editor} />
         <EditorContent editor={editor} className={cn('minimal-tiptap-editor', editorContentClassName)} />
         <LinkBubbleMenu editor={editor} />

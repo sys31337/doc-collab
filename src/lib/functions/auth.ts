@@ -27,7 +27,9 @@ export const signUp = async (payload: { email: string; password: string }) => {
 
 export const signIn = async (payload: { email: string; password: string }) => {
   const supabase = await createClient();
-  const { error } = await supabase.auth.signInWithPassword(payload);
+  const { data, error } = await supabase.auth.signInWithPassword(payload);
+  const { id: uuid, email } = data.user || {};
+  await supabase.from('users').upsert({ uuid, email }, { onConflict: 'email' });
   if (error) {
     console.log(error);
   } else {

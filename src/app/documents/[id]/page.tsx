@@ -7,7 +7,7 @@ import { Input } from '@components/ui/input';
 import { Content } from '@tiptap/react';
 import { TooltipProvider } from '@components/ui/tooltip';
 import { useParams } from 'next/navigation';
-import { Room } from 'app/Room';
+import Room from 'app/Room';
 import { MinimalTiptapEditor } from '@components/minimal-tiptap';
 
 const EditDocument: React.FC = () => {
@@ -20,9 +20,7 @@ const EditDocument: React.FC = () => {
   const addDocument = useDocumentStore((state) => state.addDocument);
 
   const createDocument = async () => {
-
     setIsSaving(true);
-
     const res = await fetch('/api/v1/documents/create', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -61,12 +59,13 @@ const EditDocument: React.FC = () => {
           className='bg-white'
           onChange={(e) => setTitle(e.target.value)}
         />
-        <Room>
+        <Room roomId={id}>
           <MinimalTiptapEditor
             value={content}
             onChange={setContent}
             className="w-full bg-white border-0 my-2"
-            editorContentClassName="px-5"
+            editorContentClassName="p-5"
+            immediatelyRender={false}
             output="html"
             placeholder="Type your description here..."
             autofocus={true}

@@ -14,7 +14,7 @@ const Layout: React.FC<LayoutProps> = async ({ children }) => {
     ? (<div className="flex flex-1 flex-col bg-gray-50 min-h-[100dvh] h-full w-full" >
       <Navbar user={user} />
       <main className="flex-1">
-        <div className="mx-auto max-w-6xl pt-5">
+        <div className="mx-auto max-w-6xl p-5">
           {children}
         </div>
       </main>
