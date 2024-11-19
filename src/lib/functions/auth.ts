@@ -15,12 +15,32 @@ export const signOut = async () => {
   }
 }
 
-export const signIn = async () => {
+export const signUp = async (payload: { email: string; password: string }) => {
+  const supabase = await createClient();
+  const { error } = await supabase.auth.signUp(payload);
+  if (error) {
+    console.log(error);
+  } else {
+    redirect('/');
+  }
+}
+
+export const signIn = async (payload: { email: string; password: string }) => {
+  const supabase = await createClient();
+  const { error } = await supabase.auth.signInWithPassword(payload);
+  if (error) {
+    console.log(error);
+  } else {
+    redirect('/');
+  }
+}
+
+export const oAuth = async (provider: 'discord' | 'google') => {
   'use server';
   const supabase = await createClient();
   const origin = (await headers()).get('origin')
   const { error, data } = await supabase.auth.signInWithOAuth({
-    provider: 'discord',
+    provider,
     options: {
       redirectTo: `${origin}/auth/cb`
     }
