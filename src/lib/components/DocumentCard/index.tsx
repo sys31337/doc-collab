@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -15,6 +15,8 @@ import { Input } from '@components/ui/input';
 import { DialogClose } from '@radix-ui/react-dialog';
 import { Document } from '@lib/types/document';
 import Link from 'next/link';
+import useUserStore from '@lib/stores/userStore';
+import { FaLock, FaUnlock } from 'react-icons/fa';
 
 interface DocumentCardProps {
   document: Document
@@ -23,6 +25,8 @@ interface DocumentCardProps {
 const DocumentCard: React.FC<DocumentCardProps> = ({ document }) => {
   const [shareEmail, setShareEmail] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useUserStore();
+  const isOwner = user?.id === document.user_id;
   const toggleModal = () => setIsOpen((prev) => !prev);
   const handleShare = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -39,61 +43,58 @@ const DocumentCard: React.FC<DocumentCardProps> = ({ document }) => {
     <Card className="flex-1">
       <CardHeader className='relative'>
         <div className='absolute top-0 right-0 m-3'>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button variant="outline" onClick={toggleModal} className='p-0 w-8 h-8 rounded-full'>
-                <Share />
-              </Button>
-            </DialogTrigger>
-            {isOpen && (
-              <DialogContent className="sm:max-w-md">
-                <DialogHeader>
-                  <DialogTitle>Share document</DialogTitle>
-                  <DialogDescription>
-                    If the user exists, they will be able to view and edit the document
-                  </DialogDescription>
-                </DialogHeader>
-                <form onSubmit={handleShare}>
-                  <div className="flex items-center space-x-2">
-                    <div className="grid flex-1 gap-2">
-                      <Label htmlFor="email" className="sr-only">
-                        Email
-                      </Label>
-                      <Input
-                        id="email"
-                        onChange={(e) => setShareEmail(e.target.value)}
-                        placeholder="user@example.com"
-                      />
+          {isOwner && (
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline" onClick={toggleModal} className='p-0 w-8 h-8 rounded-full'>
+                  <Share />
+                </Button>
+              </DialogTrigger>
+              {isOpen && (
+                <DialogContent className="sm:max-w-md">
+                  <DialogHeader>
+                    <DialogTitle>Share document</DialogTitle>
+                    <DialogDescription>
+                      If the user exists, they will be able to view and edit the document
+                    </DialogDescription>
+                  </DialogHeader>
+                  <form onSubmit={handleShare}>
+                    <div className="flex items-center space-x-2">
+                      <div className="grid flex-1 gap-2">
+                        <Label htmlFor="email" className="sr-only">
+                          Email
+                        </Label>
+                        <Input
+                          id="email"
+                          onChange={(e) => setShareEmail(e.target.value)}
+                          placeholder="user@example.com"
+                        />
+                      </div>
+                      <Button type="submit" size="sm" className="px-3">
+                        <span className="sr-only">Send</span>
+                        <Send />
+                      </Button>
                     </div>
-                    <Button type="submit" size="sm" className="px-3">
-                      <span className="sr-only">Send</span>
-                      <Send />
-                    </Button>
-                  </div>
-                </form>
-                <DialogFooter className="sm:justify-end">
-                  <DialogClose asChild>
-                    <Button type="button" variant="outline">
-                      Cancel
-                    </Button>
-                  </DialogClose>
-                </DialogFooter>
-              </DialogContent>
-            )}
-          </Dialog>
+                  </form>
+                  <DialogFooter className="sm:justify-end">
+                    <DialogClose asChild>
+                      <Button type="button" variant="outline">
+                        Cancel
+                      </Button>
+                    </DialogClose>
+                  </DialogFooter>
+                </DialogContent>
+              )}
+            </Dialog>
+          )}
         </div>
         <CardTitle>{document.title || 'Untitled'}</CardTitle>
-        <CardDescription>You have 3 unread messages.</CardDescription>
+        <CardDescription>{
+          isOwner
+            ? <span className='text-xs mt-1 text-green-500 flex gap-1'><FaUnlock /> Your document</span>
+            : <span className='text-xs mt-1 text-red-500 flex gap-1'><FaLock /> Document shared with you</span>
+        }</CardDescription>
       </CardHeader>
-      <CardContent className="grid gap-4">
-        <div className=" flex items-center space-x-4 rounded-md border p-4">
-          <div className="flex -space-x-2 overflow-hidden">
-            <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full inline-block border-2 border-background">
-              <img className="aspect-square h-full w-full" src="https://ui.shadcn.com/avatars/01.png" />
-            </span>
-          </div>
-        </div>
-      </CardContent>
       <CardFooter className='gap-2'>
         <Link href={`documents/${document.id}`} className="w-full">
           <Button className="w-full">

@@ -6,12 +6,11 @@ import { Card } from "@lib/components/ui/card"
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
 import DocumentCard from '@components/DocumentCard';
-
+import Room from '../Room';
 
 const Documents: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { documents, setDocuments } = useDocumentStore();
-
   useEffect(() => {
     const getDocument = async () => {
       const res = await fetch('/api/v1/documents/get');
@@ -32,7 +31,9 @@ const Documents: React.FC = () => {
         </Card>
       </Link>
       {documents?.map((document) => (
-        <DocumentCard key={document.id} document={document} />
+        <Room roomId={document.id} key={document.id} >
+          <DocumentCard document={document} />
+        </Room>
       ))}
     </div>
   )
