@@ -18,7 +18,7 @@ type PictureProps = BothProps & {
   variant?: "avatar";
   name?: string;
   src?: string;
-  color: [string, string];
+  color: [string, string] | string;
   statusColor?: string;
   count?: never;
 };

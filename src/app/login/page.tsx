@@ -54,7 +54,7 @@ const Login: React.FC = () => {
               <Label>Password</Label>
               <Input name="password" onChange={handleInputChange} autoComplete='new-password' type="password" />
             </div>
-            <div className="flex justify-center items-center ">
+            <div className="flex justify-center items-center">
               <Button type="submit">{isLogin ? 'Login' : 'Sign up'}</Button>
             </div>
           </form>
