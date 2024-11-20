@@ -23,7 +23,7 @@ import { useMinimalTiptapEditor } from './hooks/use-minimal-tiptap'
 import { MeasuredContainer } from './components/measured-container'
 import { useLiveblocksExtension } from '@liveblocks/react-tiptap'
 import StarterKit from '@tiptap/starter-kit'
-import { useMyPresence, useOthers } from '@liveblocks/react'
+import { JsonObject, useMyPresence, useOthers } from '@liveblocks/react'
 import Cursor from '@components/Cursor'
 
 export interface MinimalTiptapProps extends Omit<UseMinimalTiptapEditorProps, 'onUpdate'> {
@@ -171,6 +171,7 @@ export const MinimalTiptapEditor = React.forwardRef<HTMLDivElement, MinimalTipta
         onPointerMove={(event: { clientX: number, clientY: number }) => {
           // Update the user cursor position on every pointer move
           updateMyPresence({
+
             cursor: {
               x: Math.round(event.clientX),
               y: Math.round(event.clientY),
@@ -200,9 +201,10 @@ export const MinimalTiptapEditor = React.forwardRef<HTMLDivElement, MinimalTipta
             return (
               <Cursor
                 key={`cursor-${connectionId}`}
+                name={`${((presence?.__yjs as JsonObject)?.user as JsonObject)?.name}`}
                 color={COLORS[connectionId % COLORS.length]}
-                x={(presence.cursor as {x: number})?.x || 0}
-                y={(presence.cursor as {y: number})?.y || 0}
+                x={(presence.cursor as { x: number })?.x || 0}
+                y={(presence.cursor as { y: number })?.y || 0}
               />
             );
           })
