@@ -1,5 +1,5 @@
 
-# Product Management API
+# Doc-Collab
 ## Overview:
 
 **Doc-Collab** a collaborative document editing platform! using powerful set of technologies to deliver a seamless, interactive experience for users. Our tech stack includes:
