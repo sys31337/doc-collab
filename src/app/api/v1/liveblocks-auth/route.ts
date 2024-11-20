@@ -18,8 +18,8 @@ export async function POST() {
     },
   });
 
-  // To add more security for this depending on roomId
-  session.allow(`liveblocks:examples:*`, session.FULL_ACCESS);
+  // Todo: Adding more security for this depending on roomId
+  session.allow(`${process.env.NEXT_PUBLIC_ROOM_PREFIX}*`, session.FULL_ACCESS);
 
   const { body, status } = await session.authorize();
   return new Response(body, { status });

@@ -96,14 +96,11 @@ const DocumentCard: React.FC<DocumentCardProps> = ({ document }) => {
         }</CardDescription>
       </CardHeader>
       <CardFooter className='gap-2'>
-        <Link href={`documents/${document.id}`} className="w-full">
-          <Button className="w-full">
+        <Link href={document.id} className="w-full">
+          <Button className="p-0 w-full">
             <Edit2 /> View
           </Button>
         </Link>
-        <Button className="w-full bg-red-500 hover:bg-red-500/90 text-white">
-          <Trash /> Delete
-        </Button>
       </CardFooter>
     </Card>
   )

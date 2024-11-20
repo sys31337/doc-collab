@@ -174,6 +174,7 @@ export const ImageViewBlock: React.FC<NodeViewProps> = ({ editor, node, selected
 
         updateAttributes(normalizedData)
       } catch (error) {
+        console.log(error);
         setImageState(prev => ({
           ...prev,
           error: true,

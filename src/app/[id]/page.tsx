@@ -11,9 +11,7 @@ import { TooltipProvider } from '@components/ui/tooltip';
 import { useParams } from 'next/navigation';
 import Room from 'app/Room';
 import { MinimalTiptapEditor } from '@components/minimal-tiptap';
-import { Avatar } from '@components/Avatars';
-
-const MAX_OTHERS = 3;
+import UserAvatar from './UserAvatar';
 
 const animationProps = {
   initial: { width: 0, transformOrigin: "left" },
@@ -30,7 +28,7 @@ const animationProps = {
 
 const avatarProps = {
   style: { marginLeft: "-0.45rem" },
-  size: 48,
+  size: 32,
   outlineWidth: 3,
   outlineColor: "white",
 };
@@ -42,7 +40,6 @@ const EditDocumentComponent: React.FC<{ id: string }> = ({ id }) => {
   const [isLoading, setIsLoading] = useState(true);
   const others = useOthersMapped((other) => other.info);
   const currentUser = useSelf();
-  const hasMoreUsers = others.length > MAX_OTHERS;
 
   const addDocument = useDocumentStore((state) => state.addDocument);
 
@@ -81,7 +78,7 @@ const EditDocumentComponent: React.FC<{ id: string }> = ({ id }) => {
       <TooltipProvider>
         <div className='w-full flex justify-end'>
           <div className='flex items-center border w-fit p-1 ps-3 rounded-lg my-1 bg-white shadow-sm me-0'>
-            <p className='text-sm'>Currently in this document</p>
+            <p className='text-xs'>Currently in this document</p>
             <div
               style={{
                 minHeight: avatarProps.size + "px",
@@ -91,33 +88,26 @@ const EditDocumentComponent: React.FC<{ id: string }> = ({ id }) => {
               }}
             >
               <AnimatePresence>
-                {hasMoreUsers ? (
-                  <motion.div key="count" {...animationProps}>
-                    <Avatar {...avatarProps} variant="more" count={others.length - 3} />
-                  </motion.div>
-                ) : null}
-
-                {others
-                  .slice(0, MAX_OTHERS)
+                {[...others]
                   .reverse()
                   .map(([key, info]) => (
                     <motion.div key={key} {...animationProps}>
-                      <Avatar
-                        {...avatarProps}
+                      <UserAvatar
+                        avatarProps={avatarProps}
                         src={info.avatar}
                         name={info.name}
-                        color={[info.color, info.color]}
+                        color={info.color}
                       />
                     </motion.div>
                   ))}
 
                 {currentUser ? (
                   <motion.div key="you" {...animationProps}>
-                    <Avatar
-                      {...avatarProps}
+                    <UserAvatar
+                      avatarProps={avatarProps}
                       src={currentUser.info.avatar}
                       name={currentUser.info.name + " (you)"}
-                      color={[currentUser.info.color, currentUser.info.color]}
+                      color={currentUser.info.color}
                     />
                   </motion.div>
                 ) : null}
