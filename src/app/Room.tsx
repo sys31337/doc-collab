@@ -27,7 +27,7 @@ const Room: React.FC<RoomProps> = ({ children, roomId }) => {
         return users;
       }}
     >
-      <RoomProvider id={`liveblocks:examples:${roomId}`} initialPresence={{
+      <RoomProvider id={`${process.env.NEXT_PUBLIC_ROOM_PREFIX}${roomId}`} initialPresence={{
         cursor: null,
       }}
       >
