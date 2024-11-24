@@ -13,8 +13,7 @@ const Documents: React.FC = () => {
   const { documents, setDocuments } = useDocumentStore();
   useEffect(() => {
     const getDocument = async () => {
-      try{
-        
+      try {
         const res = await fetch('/api/v1/documents/get');
         const data = await res.json();
         setDocuments(data.documents);
