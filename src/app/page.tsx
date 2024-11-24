@@ -13,10 +13,16 @@ const Documents: React.FC = () => {
   const { documents, setDocuments } = useDocumentStore();
   useEffect(() => {
     const getDocument = async () => {
-      const res = await fetch('/api/v1/documents/get');
-      const data = await res.json();
-      setDocuments(data.documents);
-      setIsLoading(false);
+      try{
+        
+        const res = await fetch('/api/v1/documents/get');
+        const data = await res.json();
+        setDocuments(data.documents);
+      } catch (error){
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
     }
     getDocument();
     // eslint-disable-next-line react-hooks/exhaustive-deps
