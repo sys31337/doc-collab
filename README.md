@@ -54,11 +54,7 @@
    ```sh
    yarn lint
    ```
-4. Run tests:
-   ```sh
-   yarn test
-   ```
-5. Serve on production
+4. Serve on production
    ```sh
    yarn serve
    ```
